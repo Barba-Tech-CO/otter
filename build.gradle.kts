@@ -16,6 +16,7 @@ kotlin {
 dependencies {
   implementation(compose.desktop.currentOs)
   implementation(compose.material3)
+  implementation("org.jetbrains.compose.components:components-resources:${libs.versions.compose.get()}")
 }
 
 compose.desktop {
@@ -26,6 +27,16 @@ compose.desktop {
       targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
       packageName = "otter"
       packageVersion = "1.0.0"
+
+      macOS {
+        iconFile.set(project.file("assets/icons/otter.icns"))
+      }
+      windows {
+        iconFile.set(project.file("assets/icons/otter.ico"))
+      }
+      linux {
+        iconFile.set(project.file("assets/icons/otter.png"))
+      }
     }
   }
 }
