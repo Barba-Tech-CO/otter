@@ -37,6 +37,10 @@ tasks.test {
   useJUnitPlatform()
 }
 
+tasks.named<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>("compileTestKotlin") {
+  compilerOptions.optIn.add("kotlinx.coroutines.ExperimentalCoroutinesApi")
+}
+
 ktlint {
   version.set(libs.versions.ktlint.get())
   filter {
