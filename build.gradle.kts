@@ -4,6 +4,8 @@ plugins {
   alias(libs.plugins.kotlinJvm)
   alias(libs.plugins.composeCompiler)
   alias(libs.plugins.composeMultiplatform)
+  alias(libs.plugins.kotlinSerialization)
+  alias(libs.plugins.ktlint)
 }
 
 group = "co.barbatech"
@@ -15,8 +17,31 @@ kotlin {
 
 dependencies {
   implementation(compose.desktop.currentOs)
-  implementation(compose.material3)
-  implementation("org.jetbrains.compose.components:components-resources:${libs.versions.compose.get()}")
+  implementation(libs.composeMaterial3)
+  implementation(libs.composeResources)
+  implementation(libs.coroutinesCore)
+  implementation(libs.coroutinesSwing)
+  implementation(libs.serializationJson)
+  implementation(libs.postgresql)
+  implementation(libs.sqliteJdbc)
+  implementation(libs.rsyntaxtextarea)
+  implementation(libs.javaKeyring)
+
+  testImplementation(libs.kotlinTest)
+  testImplementation(libs.junitJupiter)
+  testImplementation(libs.coroutinesTest)
+  testRuntimeOnly(libs.junitPlatformLauncher)
+}
+
+tasks.test {
+  useJUnitPlatform()
+}
+
+ktlint {
+  version.set(libs.versions.ktlint.get())
+  filter {
+    exclude { it.file.path.contains("/build/generated/") }
+  }
 }
 
 compose.desktop {
